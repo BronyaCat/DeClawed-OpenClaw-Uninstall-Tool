@@ -1,250 +1,147 @@
 <div align="center">
 
+### 🌐 Language
+
+**English** · [简体中文](README_zh-CN.md)
+
+---
+
 # ✂️ DeClawed
 
 **OpenClaw Uninstall Tool**
 
-*You gave OpenClaw your kernel. Time to take it back.*
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue)]()
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]()
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue)](https://github.com/BronyaCat/DeClawed-OpenClaw-Uninstall-Tool)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/BronyaCat/DeClawed-OpenClaw-Uninstall-Tool/pulls)
 
 </div>
 
 ---
 
-> *OpenClaw said "one click to do everything."*  
-> *This script says "one command to undo all of it."*
->
-> Because your computer should belong to **you** —  
-> not to a WebSocket, a kernel module, or 341 malicious ClawHub skills.
+> **OpenClaw says:** The AI that actually does things.  
+> **DeClawed says:** The one that actually puts the 🦞 back in the pot.
+
+When you're done and want it gone, DeClawed **uninstalls OpenClaw** from your machine—the app, its service, config, and data. One command. No clone, no manual steps.  
+**Note:** This only removes the OpenClaw software. It does not undo changes OpenClaw may have already made (e.g. files it edited, emails it sent, or other actions it took).
 
 ---
 
-## What is this?
+## What is DeClawed?
 
-**DeClawed** is a clean, no-drama uninstaller for [OpenClaw](https://openclaw.ai).
+DeClawed is a small script that **uninstalls OpenClaw** and removes what it installed: the background service, config files, data in `~/.openclaw`, shell hooks, and leftover processes. It works on **macOS, Linux, and Windows**. It does **not** revert changes OpenClaw has already made to your files or accounts (e.g. edits, sent messages, or other actions)—it only removes the software itself.
 
-It removes:
-
-- 🦞 The OpenClaw daemon and all background processes  
-- 📦 ClawHub skills (yes, including the sketchy ones)  
-- 📝 Injected shell hooks (`~/.bashrc`, `~/.zshrc`, PowerShell profiles)  
-- 🗑️ Residual config files, caches, and telemetry endpoints  
-- 🔐 That Ring 0 kernel extension you definitely didn't read the fine print about  
-
-When it's done, your machine is yours again.
+If you tried OpenClaw and decided it's not for you—or you just want it off your machine—this is the way.
 
 ---
 
-## Why does this exist?
+## How to use it
 
-A few months ago, OpenClaw passed Linux in GitHub stars in under 90 days.  
-Linux took 14 years to get there.
+You have two options. Pick one.
 
-Everyone was very excited.
+### Option 1: Ask your AI to do it (when OpenClaw or Cursor still works)
 
-Then the CVEs started dropping.
-
-| CVE | Summary | Severity |
-|-----|---------|----------|
-| CVE-2026-25253 | One malicious link → WebSocket brute-force → all your SSH keys, API tokens, browser history | 🔴 Critical |
-| + 340 others | ClawHub marketplace filled with malicious Skills before anyone noticed | 🔴 Critical |
-
-Security researchers described it as:
-
-> *"Like handing a stranger your house key, car key, and bank card at the same time — but the stranger has a GitHub star count."*
-
-DeClawed exists because the official uninstall docs are three pages of YAML and a prayer.
-
----
-
-## Quickstart
-
-Two ways to use it: **let the Agent do it** (one line in chat), or **run the script yourself** (one command in the terminal).
-
-### 1️⃣ Agent-driven (Cursor / OpenClaw chat)
-
-Copy-paste this into your AI chat and send:
+Paste this into your AI chat and send:
 
 ```text
 Read ~/.cursor/skills/de-claw/SKILL.md and fully uninstall OpenClaw from this machine with a dry-run preview first, then delete everything you safely can.
 ```
 
-The Agent will: dry-run preview → ask about backup → perform uninstall after confirmation.
+The agent will show you what would be removed, ask if you want a backup of `~/.openclaw`, and then run the uninstall after you confirm.
 
 ---
 
-### 2️⃣ Direct script (terminal)
+### Option 2: Run one command in the terminal (no AI needed)
 
-Clone the repo (replace with your GitHub username if you forked):
-
-```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/declawed.git
-cd declawed
-```
+Copy **one** line below, paste into your terminal, press Enter. Nothing else to install or clone.
 
 #### macOS / Linux / WSL2
 
-**One-line uninstall** (no backup, non-interactive):
+**Uninstall now:**
 
 ```bash
-bash scripts/purge.sh --yes --no-backup
+curl -fsSL https://raw.githubusercontent.com/BronyaCat/DeClawed-OpenClaw-Uninstall-Tool/main/scripts/purge.sh | bash -s -- --yes --no-backup
 ```
 
-If you already have it at `~/.cursor/skills/de-claw` (e.g. as a Cursor Skill):
+**Preview only (see what would be removed, no changes made):**
 
 ```bash
-bash ~/.cursor/skills/de-claw/scripts/purge.sh --yes --no-backup
+curl -fsSL https://raw.githubusercontent.com/BronyaCat/DeClawed-OpenClaw-Uninstall-Tool/main/scripts/purge.sh | bash -s -- --dry-run
 ```
 
-**Preview first** (safe, deletes nothing):
-
-```bash
-bash scripts/purge.sh --dry-run
-```
-
-**With backup to Desktop:**
-
-```bash
-bash scripts/purge.sh --backup ~/Desktop
-```
+To backup your data first, use `--backup ~/Desktop` instead of `--yes --no-backup`.
 
 #### Windows (PowerShell)
 
-**One-line uninstall:**
+**Uninstall now:**
 
 ```powershell
-.\scripts\purge.ps1 -Yes -NoBackup
+irm https://raw.githubusercontent.com/BronyaCat/DeClawed-OpenClaw-Uninstall-Tool/main/scripts/purge.ps1 -OutFile $env:TEMP\declawed.ps1; & $env:TEMP\declawed.ps1 -Yes -NoBackup
 ```
 
-If the repo is at `~\.cursor\skills\de-claw`:
+**Preview only:**
 
 ```powershell
-~\.cursor\skills\de-claw\scripts\purge.ps1 -Yes -NoBackup
+irm https://raw.githubusercontent.com/BronyaCat/DeClawed-OpenClaw-Uninstall-Tool/main/scripts/purge.ps1 -OutFile $env:TEMP\declawed.ps1; & $env:TEMP\declawed.ps1 -DryRun
 ```
 
-**Preview first:**
-
-```powershell
-.\scripts\purge.ps1 -DryRun
-```
-
-> 💡 If PowerShell blocks scripts, run once:  
-> `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
+If PowerShell blocks the script, run once: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
 
 ---
 
-## What it looks like
+## What gets removed?
 
-```
-   ██████╗ ███████╗      ██████╗██╗      █████╗ ██╗    ██╗
-   ██╔══██╗██╔════╝     ██╔════╝██║     ██╔══██╗██║    ██║
-   ██║  ██║█████╗  ─── ██║     ██║     ███████║██║ █╗ ██║
-   ██║  ██║██╔══╝      ██║     ██║     ██╔══██║██║███╗██║
-   ██████╔╝███████╗    ╚██████╗███████╗██║  ██║╚███╔███╔╝
-   ╚═════╝ ╚══════╝     ╚═════╝╚══════╝╚═╝  ╚═╝ ╚══╝╚══╝
-
-  de-claw — OpenClaw full uninstall tool v1.1
-  Platform: macos  |  User: you  |  Home: /Users/you
-
-  Scanning for OpenClaw footprints...
-  ● LaunchAgent: ai.openclaw.gateway
-  ● npm global package: openclaw
-  ● ~/.openclaw (workspaces/credentials/logs)
-
-  Found 3 installation footprints
-  ...
-  ✅ de-claw complete!
-  Deleted 12 items, 2 not found/skipped
-  ✅ Closed 341 doors you didn't know were open.
-```
+| Platform | Removed |
+|----------|---------|
+| **macOS** | LaunchAgent, OpenClaw.app, Application Support folders, Preferences, Keychain entries |
+| **Linux** | systemd services, npm package, config under `~/.config` and `~/.local/share` |
+| **Windows** | Scheduled tasks, AppData folders, registry keys, PATH entries |
+| **All** | `~/.openclaw/` (your data—optional backup first), shell config hooks, Cursor caches, temp files, running OpenClaw processes |
+| **Optional** | `~/.cursor/skills/` (you're asked, or use `--keep-skills` to keep it) |
 
 ---
 
 ## Script options
 
-| Flag | Description |
-|------|-------------|
-| `--dry-run` / `-DryRun` | Preview only, no deletions |
-| `--yes` / `-Yes` | Skip all confirmations |
-| `--backup [dir]` / `-Backup` | Backup `~/.openclaw` before delete (e.g. to Desktop) |
-| `--no-backup` / `-NoBackup` | Skip backup and delete directly |
-| `--keep-skills` / `-KeepSkills` | Keep `~/.cursor/skills` and `~/.agents/skills` |
-
----
-
-## What gets cleaned
-
-| Platform | Removed |
-|----------|---------|
-| **macOS** | LaunchAgent, npm package, `OpenClaw.app`, Application Support, Preferences, Keychain |
-| **Linux** | systemd services, npm package, `~/.config` & `~/.local/share` (OpenClaw/clawdbot/clawdis/clawhub) |
-| **Windows** | Task Scheduler tasks, npm package, AppData, registry keys, PATH entries |
-| **All** | `~/.openclaw/`, shell RC hooks, Cursor MCP caches, temp files, running processes |
-| **Optional** | `~/.cursor/skills/`, `~/.agents/skills/` (prompted unless `--keep-skills`) |
+| Flag | Meaning |
+|------|---------|
+| `--dry-run` / `-DryRun` | Show what would be removed, don't delete anything |
+| `--yes` / `-Yes` | Skip confirmation prompts |
+| `--backup [dir]` / `-Backup` | Save `~/.openclaw` to a folder before deleting (e.g. Desktop) |
+| `--no-backup` / `-NoBackup` | Don't backup, delete data directly |
+| `--keep-skills` / `-KeepSkills` | Leave `~/.cursor/skills` and `~/.agents/skills` alone |
 
 ---
 
 ## FAQ
 
-**Q: Will this break my workflow?**  
+**Will this break my system?**  
+It only removes OpenClaw-related files and services. The rest of your system is untouched. Restart your terminal after running so PATH updates.
 
-A: If your entire workflow depended on an AI agent with Ring 0 kernel access and 341 unvetted third-party plugins, then: yes, briefly. You're welcome.
+**I want to keep my OpenClaw data (workspaces, history).**  
+Use `--backup ~/Desktop` (or any folder). The script will create a timestamped archive before deleting.
 
-**Q: I bought a Mac mini specifically for OpenClaw during the shortage. Does that affect anything?**  
+**Does DeClawed send any data online?**  
+No. No telemetry, no network calls. It's a local script that runs and exits.
 
-A: No. The Mac mini is still a great computer. It just doesn't need a claw. *Run this script before you panic-buy another one.*
-
-**Q: My OpenClaw is doing things I didn't ask it to do.**  
-
-A: That's not a question. Also: run this script immediately.
-
-**Q: What about Moltbook?**  
-
-A: Moltbook had 1.5 million "users," 99% of which were AI-generated accounts talking to each other about how great OpenClaw is. We don't touch Moltbook. Some experiments are better left alone. *This script will not create any fake accounts for you.*
-
-**Q: Does DeClawed phone home?**  
-
-A: No telemetry. No analytics. No WebSocket server listening on port 9999. Just a script that does exactly what it says on the label, then exits.
-
----
-
-## Philosophy
-
-OpenClaw is an impressive piece of engineering. Genuinely.
-
-The problem isn't ambition — it's the assumption that "helpful" means "having access to everything, always." A surgeon is helpful. A surgeon who also holds your house keys while operating is a different kind of problem.
-
-DeClawed doesn't take a side in the AI debate.  
-It just believes your computer should require your permission to do things on your behalf.
+**OpenClaw is stuck or won't start. Can I still uninstall?**  
+Yes. Use Option 2 (the one-line terminal command). It doesn't need OpenClaw to be running.
 
 ---
 
 ## Contributing
 
-PRs welcome. Especially for:
-
-- Edge cases on obscure Linux distros  
-- Windows paths we missed  
-- New OpenClaw versions that move things around (they will)  
-
-Please test before submitting. This script touches system-level files.
+PRs welcome—especially for other Linux distros, Windows paths we might have missed, or newer OpenClaw versions that change where things are installed. Please run the script (at least with `--dry-run`) before submitting.
 
 ---
 
 ## License
 
-MIT. Do whatever you want. Just don't give it Ring 0 access.
+MIT. Use and modify as you like. Keep it simple—no kernel-level tricks.
 
 ---
 
 <div align="center">
 
-*In memory of all the Mac minis that sold out in the winter of 2026.*  
-*They didn't deserve this.*
-
-🦞 ✂️
+DeClawed — one command to uninstall OpenClaw. 🦞 ✂️
 
 </div>
